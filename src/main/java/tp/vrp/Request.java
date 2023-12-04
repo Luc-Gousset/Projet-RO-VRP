@@ -2,7 +2,7 @@ package tp.vrp;
 
 public class Request {
     private float quantity ;
-    private Note node ;
+    private Node node ;
     private int id;
     public float getQuantity() {
         return quantity;
