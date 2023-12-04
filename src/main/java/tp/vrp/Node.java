@@ -7,12 +7,13 @@ public class Node {
     public double longitude;
     public double latitude;
 
-    public Node(double longitude, double latitude) {
+    public Node(int id, double longitude, double latitude) {
         this.longitude = longitude;
         this.latitude = latitude;
+        this.id = id;
     }
 
     public static double GetDistance(Node a, Node b){
-        return R;
+        return R ;
     }
 }
