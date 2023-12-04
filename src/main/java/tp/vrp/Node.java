@@ -2,7 +2,7 @@ package tp.vrp;
 
 public class Node {
 
-    private final double R = 6370.7;
+    private static final double R = 6370.7;
     public int id;
     public double longitude;
     public double latitude;
@@ -14,6 +14,6 @@ public class Node {
     }
 
     public static double GetDistance(Node a, Node b){
-        return R ;
+        return R * Math.acos(Math.sin(a.latitude)*Math.sin(b.latitude)+Math.cos(a.latitude)*Math.cos(b.latitude)*Math.cos(a.longitude-b.longitude));
     }
 }
