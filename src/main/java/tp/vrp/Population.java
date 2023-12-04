@@ -20,7 +20,7 @@ public class Population {
 
         for(int i = 0; i<pop.size(); i++){
             int node_id = pop.get(i).id;
-            if (!pop.get(node_id).getType()){
+            if (pop.get(node_id).getType()!=1){
                 this.depot = pop.get(node_id);
             }
 
@@ -28,5 +28,5 @@ public class Population {
         this.pop = pop ;
     }
 
-    public
+
 }
