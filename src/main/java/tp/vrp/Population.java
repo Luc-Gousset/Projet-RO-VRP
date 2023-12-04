@@ -18,7 +18,6 @@ public class Population {
     }
     public Population(ArrayList<Node> pop){
 
-
         for(int i = 0; i<pop.size(); i++){
             int node_id = pop.get(i).id;
             if (!pop.get(node_id).getType()){
