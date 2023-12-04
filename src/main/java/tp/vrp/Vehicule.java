@@ -100,5 +100,9 @@ public class Vehicule {
     public Node getDepartureNode() {
         return departureNode;
     }
+
+    public String toString(){
+        return "Ce vehicule part du noeud :"+getDepartureNode().toString()+"et arrive au noeud : "+getArrivalNode().toString()+". Ce véhicule est de type : "+getVehicleProfile()+" avec une capacitée iniale de "+getCapacityInitial()+" unitée. Il reste "+getCapacityCurrent()+" unitées." ;
+    }
 }
 
