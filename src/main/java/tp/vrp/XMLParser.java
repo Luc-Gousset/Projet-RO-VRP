@@ -1,12 +1,16 @@
 package tp.vrp;
 
+import org.w3c.dom.NodeList;
+
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.events.Attribute;
 import javax.xml.stream.events.XMLEvent;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.XMLStreamException;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class XMLParser {
@@ -28,8 +32,8 @@ public class XMLParser {
             int type_Node=0;
             int id_Node = 0;
             int id_Request = 0;
-            int node=0;
             double quantity = 0;
+            Request currentRequest = null;
             Node currentNode = null;
 
             while (eventReader.hasNext()) {
@@ -40,35 +44,55 @@ public class XMLParser {
                     String elementName = startElement.getName().getLocalPart();
 
                     switch (elementName) {
+                        case "node":
+                            currentNode = new Node();
+                            Iterator<Attribute> attributes2 = startElement.getAttributes();
+                            while (attributes2.hasNext()) {
+                                Attribute attribute = attributes2.next();
+                                String attrName = attribute.getName().getLocalPart();
+                                String attrValue = attribute.getValue();
+                                if ("id".equals(attrName)) {
+                                    currentNode.setId(Integer.parseInt(attrValue));
+                                } else if ("type".equals(attrName)) {
+                                    currentNode.setType(Integer.parseInt(attrValue));
+                                }
+                            }
+
+                            break;
                         case "cx":
                             event = eventReader.nextEvent();
-                            longitude = Double.parseDouble(event.asCharacters().getData());
+                            if (currentNode != null) {
+                                currentNode.setLongitude(Double.parseDouble(event.asCharacters().getData()));
+                            }
                             break;
                         case "cy":
                             event = eventReader.nextEvent();
-                            latitude = Double.parseDouble(event.asCharacters().getData());
-
+                            if (currentNode != null) {
+                                currentNode.setLatitude(Double.parseDouble(event.asCharacters().getData()));
+                                nodeList.add(currentNode);
+                            }
                             break;
-                        case "type":
-                            event = eventReader.nextEvent();
-                            type_Node= Integer.parseInt(event.asCharacters().getData());
 
-                            currentNode = new Node(++id_Node, longitude, latitude,type_Node);
-                            nodeList.add(currentNode);
-                            break;
                         case "request":
-                            id_Request++;
+                            currentRequest = new Request();
+                            Iterator<Attribute> attributes = startElement.getAttributes();
+                            while (attributes.hasNext()) {
+                                Attribute attribute = attributes.next();
+                                String attrName = attribute.getName().getLocalPart();
+                                String attrValue = attribute.getValue();
+                                if ("id".equals(attrName)) {
+                                    currentRequest.setId(Integer.parseInt(attrValue));
+                                } else if ("node".equals(attrName)) {
+                                    currentRequest.setNode(Integer.parseInt(attrValue));
+                                }
+                            }
                             break;
                         case "quantity":
                             event = eventReader.nextEvent();
-                            quantity = Double.parseDouble(event.asCharacters().getData());
-
-                            break;
-                        case "node":
-                            event = eventReader.nextEvent();
-                            node = Integer.parseInt(event.asCharacters().getData());
-                            Request request = new Request(quantity,node,id_Request);
-                            requestList.add(request);
+                            if (currentRequest != null) {
+                                currentRequest.setQuantity(Double.parseDouble(event.asCharacters().getData()));
+                                requestList.add(currentRequest);
+                            }
                             break;
                     }
                 }

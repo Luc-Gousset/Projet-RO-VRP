@@ -11,7 +11,10 @@ public class Request {
     private int node ;
     private int id;
 
-    public Request (double quantity,int node ,int id ){
+    public Request() {
+    }
+
+    public Request (double quantity, int node , int id ){
         setId(id);
         setNode(node);
         setQuantity(quantity);

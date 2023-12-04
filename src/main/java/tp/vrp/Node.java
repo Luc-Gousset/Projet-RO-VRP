@@ -21,7 +21,8 @@ public class Node {
         return R * Math.acos(Math.sin(a.latitude)*Math.sin(b.latitude)+Math.cos(a.latitude)*Math.cos(b.latitude)*Math.cos(a.longitude-b.longitude));
     }
 
-
+    public Node() {
+    }
 
     public void setType(int type) {
         this.type = type;
@@ -37,6 +38,18 @@ public class Node {
 
     public double getLatitude() {
         return latitude;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
     }
 
     public int getType() {
