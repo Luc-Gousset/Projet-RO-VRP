@@ -16,6 +16,14 @@ public class Vehicule {
     private int capacityInitial ;
     private int capacityCurrent ;
 
+
+    public Vehicule(int vehicleProfile,Node departureNode,Node arrivalNode ,int capacityInitial){
+        setArrivalNode(arrivalNode);
+        setCapacityInitial(capacityInitial);
+        setVehicleProfile(vehicleProfile);
+        setDepartureNode(departureNode);
+
+    }
     /**
      * Définit le nœud d'arrivée du véhicule.
      *
