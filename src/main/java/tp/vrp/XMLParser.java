@@ -10,10 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class XMLParser {
-    private List<Node> data;
+    private List<Node> nodeList;
+    private List<Request> requestList;
 
     public XMLParser() {
-        this.data = new ArrayList<>();
+        this.nodeList = new ArrayList<>();
+        this.requestList = new ArrayList<>();
     }
 
     public void parseXMLFile(String filePath) {
@@ -23,7 +25,12 @@ public class XMLParser {
 
             double longitude = 0;
             double latitude = 0;
-            int id = 0;
+            int type_Node=0;
+            int id_Node = 0;
+            int id_Request = 0;
+            int node=0;
+            double quantity = 0;
+            Node currentNode = null;
 
             while (eventReader.hasNext()) {
                 XMLEvent event = eventReader.nextEvent();
@@ -40,8 +47,28 @@ public class XMLParser {
                         case "cy":
                             event = eventReader.nextEvent();
                             latitude = Double.parseDouble(event.asCharacters().getData());
-                            Node node = new Node(++id, longitude, latitude);
-                            data.add(node);
+
+                            break;
+                        case "type":
+                            event = eventReader.nextEvent();
+                            type_Node= Integer.parseInt(event.asCharacters().getData());
+
+                            currentNode = new Node(++id_Node, longitude, latitude,type_Node);
+                            nodeList.add(currentNode);
+                            break;
+                        case "request":
+                            id_Request++;
+                            break;
+                        case "quantity":
+                            event = eventReader.nextEvent();
+                            quantity = Double.parseDouble(event.asCharacters().getData());
+
+                            break;
+                        case "node":
+                            event = eventReader.nextEvent();
+                            node = Integer.parseInt(event.asCharacters().getData());
+                            Request request = new Request(quantity,nodeList.get(node),id_Request);
+                            requestList.add(request);
                             break;
                     }
                 }
@@ -52,6 +79,10 @@ public class XMLParser {
     }
 
     public List<Node> getNodeList() {
-        return data;
+        return nodeList;
+    }
+
+    public List<Request> getRequestList() {
+        return requestList;
     }
 }
