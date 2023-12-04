@@ -16,8 +16,10 @@ public class Vehicule {
     private int capacityInitial ;
     private int capacityCurrent ;
 
+    public Vehicule() {
+    }
 
-    public Vehicule(int vehicleProfile,int departureNode,int arrivalNode ,int capacityInitial){
+    public Vehicule(int vehicleProfile, int departureNode, int arrivalNode , int capacityInitial){
         setArrivalNode(arrivalNode);
         setCapacityInitial(capacityInitial);
         setVehicleProfile(vehicleProfile);

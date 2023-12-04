@@ -1,13 +1,13 @@
 package tp.vrp;
 
-import org.w3c.dom.NodeList;
+
 
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.events.Attribute;
 import javax.xml.stream.events.XMLEvent;
 import javax.xml.stream.events.StartElement;
-import javax.xml.stream.XMLStreamException;
+
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -16,10 +16,12 @@ import java.util.List;
 public class XMLParser {
     private List<Node> nodeList;
     private List<Request> requestList;
+    private List<Vehicule> vehiculeList;
 
     public XMLParser() {
         this.nodeList = new ArrayList<>();
         this.requestList = new ArrayList<>();
+        this.vehiculeList = new ArrayList<>();
     }
 
     public void parseXMLFile(String filePath) {
@@ -27,14 +29,10 @@ public class XMLParser {
             XMLInputFactory factory = XMLInputFactory.newInstance();
             XMLEventReader eventReader = factory.createXMLEventReader(new FileReader(filePath));
 
-            double longitude = 0;
-            double latitude = 0;
-            int type_Node=0;
-            int id_Node = 0;
-            int id_Request = 0;
-            double quantity = 0;
+
             Request currentRequest = null;
             Node currentNode = null;
+            Vehicule currentVehicle = null;
 
             while (eventReader.hasNext()) {
                 XMLEvent event = eventReader.nextEvent();
@@ -94,6 +92,38 @@ public class XMLParser {
                                 requestList.add(currentRequest);
                             }
                             break;
+                        case "vehicle_profile":
+                            currentVehicle = new Vehicule();
+                            Iterator<Attribute> attributes3 = startElement.getAttributes();
+                            while (attributes3.hasNext()) {
+                                Attribute attribute = attributes3.next();
+                                String attrName = attribute.getName().getLocalPart();
+                                String attrValue = attribute.getValue();
+                                if ("type".equals(attrName)) {
+                                    currentVehicle.setVehicleProfile(Integer.parseInt(attrValue));
+                                }
+                            }
+                            break;
+                        case "departure_node":
+                            event = eventReader.nextEvent();
+                            if (currentVehicle != null) {
+                                currentVehicle.setDepartureNode(Integer.parseInt(event.asCharacters().getData()));
+                            }
+                            break;
+                        case "arrival_node":
+                            event = eventReader.nextEvent();
+                            if (currentVehicle != null) {
+                                currentVehicle.setArrivalNode(Integer.parseInt(event.asCharacters().getData()));
+                            }
+                            break;
+                        case "capacity":
+                            event = eventReader.nextEvent();
+                            if (currentVehicle != null) {
+                                currentVehicle.setCapacityInitial((int) Double.parseDouble(event.asCharacters().getData()));
+                                vehiculeList.add(currentVehicle);
+                            }
+                            break;
+
                     }
                 }
             }
@@ -108,5 +138,8 @@ public class XMLParser {
 
     public List<Request> getRequestList() {
         return requestList;
+    }
+    public List<Vehicule> getVehicleList() {
+        return vehiculeList;
     }
 }
