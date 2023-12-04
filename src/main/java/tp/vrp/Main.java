@@ -16,7 +16,6 @@ public class Main {
                         System.out.println("ID: " + node.id + ", Longitude: " + node.longitude + ", Latitude: " + node.latitude);
                         System.out.println("La distance avec le noeud zero est :" +Node.GetDistance(Node_zero,node));
                 }
-
         }
 
         }
