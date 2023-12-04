@@ -2,7 +2,7 @@ package tp.vrp;
 
 public class Node {
 
-    private static final double R = 6370.7;
+    private static final double R = 6370.7; // en km
     public int id;
     public double longitude;
     public double latitude;
