@@ -18,9 +18,9 @@ public class Population {
     }
     public Population(ArrayList<Node> pop){
 
-        for(int i = 0; i<pop.size(); i++){
-            int node_id = pop.get(i).id;
-            if (pop.get(node_id).getType()!=1){
+        for (Node node : pop) {
+            int node_id = node.id;
+            if (pop.get(node_id).getType() != 1) {
                 this.depot = pop.get(node_id);
             }
 
