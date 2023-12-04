@@ -27,4 +27,6 @@ public class Population {
         }
         this.pop = pop ;
     }
+
+    public
 }

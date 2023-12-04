@@ -8,10 +8,10 @@ package tp.vrp;
  */
 public class Request {
     private double quantity ;
-    private Node node ;
+    private int node ;
     private int id;
 
-    public Request (double quantity,Node node ,int id ){
+    public Request (double quantity,int node ,int id ){
         setId(id);
         setNode(node);
         setQuantity(quantity);
@@ -53,7 +53,7 @@ public class Request {
      *
      * @return Le nœud associé.
      */
-    public Node getNode() {
+    public int getNode() {
         return node;
     }
     /**
@@ -61,7 +61,7 @@ public class Request {
      *
      * @param node Le nœud à définir.
      */
-    public void setNode(Node node) {
+    public void setNode(int node) {
         this.node = node;
     }
 

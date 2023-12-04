@@ -10,14 +10,14 @@ package tp.vrp;
 public class Vehicule {
 
     private int vehicleProfile;
-    private Node departureNode ;
-    private Node arrivalNode ;
+    private int departureNode ;
+    private int arrivalNode ;
 
     private int capacityInitial ;
     private int capacityCurrent ;
 
 
-    public Vehicule(int vehicleProfile,Node departureNode,Node arrivalNode ,int capacityInitial){
+    public Vehicule(int vehicleProfile,int departureNode,int arrivalNode ,int capacityInitial){
         setArrivalNode(arrivalNode);
         setCapacityInitial(capacityInitial);
         setVehicleProfile(vehicleProfile);
@@ -29,7 +29,7 @@ public class Vehicule {
      *
      * @param arrivalNode Le nœud d'arrivée à définir.
      */
-    public void setArrivalNode(Node arrivalNode) {
+    public void setArrivalNode(int arrivalNode) {
         this.arrivalNode = arrivalNode;
     }
 
@@ -76,7 +76,7 @@ public class Vehicule {
      *
      * @param departureNode Le nœud de départ à définir.
      */
-    public void setDepartureNode(Node departureNode) {
+    public void setDepartureNode(int departureNode) {
         this.departureNode = departureNode;
     }
 
@@ -101,11 +101,11 @@ public class Vehicule {
         return vehicleProfile;
     }
 
-    public Node getArrivalNode() {
+    public int getArrivalNode() {
         return arrivalNode;
     }
 
-    public Node getDepartureNode() {
+    public int getDepartureNode() {
         return departureNode;
     }
     /**
@@ -116,7 +116,7 @@ public class Vehicule {
      * @return Une chaîne de caractères décrivant le véhicule.
      */
     public String toString(){
-        return "Ce vehicule part du noeud :"+getDepartureNode().toString()+"et arrive au noeud : "+getArrivalNode().toString()+". Ce véhicule est de type : "+getVehicleProfile()+" avec une capacitée iniale de "+getCapacityInitial()+" unitée. Il reste "+getCapacityCurrent()+" unitées." ;
+        return "Ce vehicule part du noeud :"+getDepartureNode()+"et arrive au noeud : "+getArrivalNode()+". Ce véhicule est de type : "+getVehicleProfile()+" avec une capacitée iniale de "+getCapacityInitial()+" unitée. Il reste "+getCapacityCurrent()+" unitées." ;
     }
 }
 
