@@ -11,6 +11,11 @@ public class Request {
     private Node node ;
     private int id;
 
+    public Request (double quantity,Node node ,int id ){
+        setId(id);
+        setNode(node);
+        setQuantity(quantity);
+    }
     /**
      * Récupère la quantité demandée par la requête.
      *
