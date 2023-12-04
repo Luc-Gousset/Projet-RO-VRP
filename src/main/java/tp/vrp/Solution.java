@@ -29,7 +29,7 @@ public class Solution {
 
         for(int i = 1; i<solution.size()-1; i++){
             int node_id = solution.get(i).id;
-            double request_capacity = requestArrayList.stream().filter(request -> request.getNode().id == node_id).findFirst().get().getQuantity();
+            double request_capacity = requestArrayList.stream().filter(request -> request.getNode() == node_id).findFirst().get().getQuantity();
             quatity+=request_capacity;
         }
         return quatity;

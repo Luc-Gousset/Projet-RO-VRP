@@ -67,7 +67,7 @@ public class XMLParser {
                         case "node":
                             event = eventReader.nextEvent();
                             node = Integer.parseInt(event.asCharacters().getData());
-                            Request request = new Request(quantity,nodeList.get(node),id_Request);
+                            Request request = new Request(quantity,node,id_Request);
                             requestList.add(request);
                             break;
                     }
