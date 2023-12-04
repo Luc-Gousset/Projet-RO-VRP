@@ -59,4 +59,13 @@ public class Request {
     public void setNode(Node node) {
         this.node = node;
     }
+
+    @Override
+    public String toString() {
+        return "Request{" +
+                "quantity=" + quantity +
+                ", node=" + node +
+                ", id=" + id +
+                '}';
+    }
 }
