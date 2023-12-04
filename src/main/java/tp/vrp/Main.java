@@ -1,7 +1,6 @@
 package tp.vrp;
 
 public class Main {
-    public static void main(String[] args) {
-        System.out.println("Hello world!");
-    }
+        XMLParser parser = new XMLParser();
+        parser.parseXMLFile("path/to/your/file.xml"); // Remplacez par le chemin de votre fichier
 }
