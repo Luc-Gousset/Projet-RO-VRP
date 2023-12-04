@@ -1,6 +1,6 @@
 package tp.vrp;
 
-public class Vehicle {
+public class Vehicule {
 
     private int vehicleProfile;
     private Node departureNode ;
