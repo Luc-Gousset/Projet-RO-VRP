@@ -100,5 +100,15 @@ public class Vehicule {
     public Node getDepartureNode() {
         return departureNode;
     }
+    /**
+     * Retourne une représentation sous forme de chaîne de caractères du véhicule,
+     * incluant des informations sur le nœud de départ, le nœud d'arrivée, le profil du véhicule,
+     * la capacité initiale et la capacité actuelle.
+     *
+     * @return Une chaîne de caractères décrivant le véhicule.
+     */
+    public String toString(){
+        return "Ce vehicule part du noeud :"+getDepartureNode().toString()+"et arrive au noeud : "+getArrivalNode().toString()+". Ce véhicule est de type : "+getVehicleProfile()+" avec une capacitée iniale de "+getCapacityInitial()+" unitée. Il reste "+getCapacityCurrent()+" unitées." ;
+    }
 }
 
