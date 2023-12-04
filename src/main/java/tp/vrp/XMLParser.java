@@ -1,18 +1,16 @@
 package tp.vrp;
 
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.DocumentBuilder;
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Node;
-import java.io.File;
+import javax.xml.stream.XMLEventReader;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.events.XMLEvent;
+import javax.xml.stream.events.StartElement;
+import javax.xml.stream.XMLStreamException;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 public class XMLParser {
-    private List<String> data;
+    private List<Node> data;
 
     public XMLParser() {
         this.data = new ArrayList<>();
@@ -20,18 +18,32 @@ public class XMLParser {
 
     public void parseXMLFile(String filePath) {
         try {
-            File xmlFile = new File(filePath);
-            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.parse(xmlFile);
-            doc.getDocumentElement().normalize();
+            XMLInputFactory factory = XMLInputFactory.newInstance();
+            XMLEventReader eventReader = factory.createXMLEventReader(new FileReader(filePath));
 
-            NodeList nList = doc.getElementsByTagName("yourElementTag"); // Remplacez par le nom de votre balise
+            double longitude = 0;
+            double latitude = 0;
+            int id = 0;
 
-            for (int i = 0; i < nList.getLength(); i++) {
-                Node node = nList.item(i);
-                if (node.getNodeType() == Node.ELEMENT_NODE) {
-                    data.add(node.getTextContent());
+            while (eventReader.hasNext()) {
+                XMLEvent event = eventReader.nextEvent();
+
+                if (event.isStartElement()) {
+                    StartElement startElement = event.asStartElement();
+                    String elementName = startElement.getName().getLocalPart();
+
+                    switch (elementName) {
+                        case "cx":
+                            event = eventReader.nextEvent();
+                            longitude = Double.parseDouble(event.asCharacters().getData());
+                            break;
+                        case "cy":
+                            event = eventReader.nextEvent();
+                            latitude = Double.parseDouble(event.asCharacters().getData());
+                            Node node = new Node(++id, longitude, latitude);
+                            data.add(node);
+                            break;
+                    }
                 }
             }
         } catch (Exception e) {
@@ -39,8 +51,7 @@ public class XMLParser {
         }
     }
 
-    public List<String> getData() {
+    public List<Node> getNodeList() {
         return data;
     }
 }
-
