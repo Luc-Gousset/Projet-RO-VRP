@@ -1,4 +1,4 @@
-package tp.vrp;
+package tp.vrp.heuristiques;
 
 import tp.vrp.Data.Node;
 import tp.vrp.SequenceSolver;
