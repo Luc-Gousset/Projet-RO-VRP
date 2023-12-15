@@ -26,4 +26,12 @@ public class Sequence {
     public Sequence() {
         this.solution = new ArrayList<>();
     }
+
+    public ArrayList<Node> getSolution() {
+        return solution;
+    }
+
+    public void setSolution(ArrayList<Node> solution) {
+        this.solution = solution;
+    }
 }

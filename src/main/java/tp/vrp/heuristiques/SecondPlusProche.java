@@ -14,18 +14,18 @@ public class SecondPlusProche extends SequenceSolver {
 
     @Override
     public Boolean compute() {
-        List<Node> orderedList = new ArrayList<>();
+        
         Node currentNode = findNodeById(101); // Partir du nœud 101
         if (currentNode == null) {
             return false;
         }
 
-        orderedList.add(currentNode);
-        while (orderedList.size() < entryNodes.size()) {
-            Node nextNode = findSecondClosestNode(currentNode, orderedList);
+        solution.solution.add(currentNode);
+        while (solution.solution.size() < entryNodes.size()) {
+            Node nextNode = findSecondClosestNode(currentNode, solution.solution);
             if (nextNode == null) {
 
-                if(orderedList.size() == (entryNodes.size()-2)) {
+                if(solution.solution.size() == (entryNodes.size()-2)) {
                     System.out.println("liste bien gourmande");
                     return true;
                 }
@@ -34,7 +34,7 @@ public class SecondPlusProche extends SequenceSolver {
                     return false;
                 }
             }
-            orderedList.add(nextNode);
+            solution.solution.add(nextNode);
             currentNode = nextNode;
         }
 
@@ -73,4 +73,5 @@ public class SecondPlusProche extends SequenceSolver {
     private Node findNodeById(int id) {
         return entryNodes.stream().filter(node -> node.getId() == id).findFirst().orElse(null);
     }
+    
 }
