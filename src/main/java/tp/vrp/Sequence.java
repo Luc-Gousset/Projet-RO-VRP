@@ -23,5 +23,7 @@ public class Sequence {
         return distance;
     }
 
-
+    public Sequence() {
+        this.solution = new ArrayList<>();
+    }
 }
