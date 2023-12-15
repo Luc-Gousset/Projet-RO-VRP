@@ -69,6 +69,9 @@ public class XMLParser {
                             break;
                         case "cy":
                             event = eventReader.nextEvent();
+                            if (nodeList.size() == 0)
+                            {nodeList.add(0,currentNode);
+                            }
                             if (currentNode != null) {
                                 currentNode.setLatitude(Double.parseDouble(event.asCharacters().getData()));
                                 nodeList.add(currentNode.id, currentNode);
@@ -91,6 +94,8 @@ public class XMLParser {
                             break;
                         case "quantity":
                             event = eventReader.nextEvent();
+
+
                             if (currentRequest != null) {
                                 currentRequest.setQuantity(Double.parseDouble(event.asCharacters().getData()));
                                 requestList.add(currentRequest.getId(), currentRequest);
