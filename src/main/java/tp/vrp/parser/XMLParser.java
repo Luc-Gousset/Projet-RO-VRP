@@ -71,7 +71,7 @@ public class XMLParser {
                             event = eventReader.nextEvent();
                             if (currentNode != null) {
                                 currentNode.setLatitude(Double.parseDouble(event.asCharacters().getData()));
-                                nodeList.add(currentNode);
+                                nodeList.add(currentNode.id, currentNode);
                             }
                             break;
 
@@ -93,7 +93,7 @@ public class XMLParser {
                             event = eventReader.nextEvent();
                             if (currentRequest != null) {
                                 currentRequest.setQuantity(Double.parseDouble(event.asCharacters().getData()));
-                                requestList.add(currentRequest);
+                                requestList.add(currentRequest.getId(), currentRequest);
                             }
                             break;
                         case "vehicle_profile":
