@@ -6,6 +6,7 @@ import java.util.List;
 
 public class Pilot extends SequenceSolver {
 
+
     public Pilot(List<Node> nodes)
     {
         super(nodes);
@@ -14,7 +15,7 @@ public class Pilot extends SequenceSolver {
     @Override
     public Boolean compute() {
 
-
+        //solution.solution
 
 
         return null;
