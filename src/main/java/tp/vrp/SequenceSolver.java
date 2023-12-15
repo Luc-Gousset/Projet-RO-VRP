@@ -9,7 +9,7 @@ public abstract class SequenceSolver {
 
     public List<Node> entryNodes;
 
-    protected Sequence solution = new Sequence() ;
+    protected Sequence solution = new Sequence();
 
     public Sequence getSolution() {
         return solution;
