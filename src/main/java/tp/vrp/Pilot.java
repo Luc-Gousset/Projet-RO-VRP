@@ -4,9 +4,8 @@ import tp.vrp.Data.Node;
 
 import java.util.ArrayList;
 
-public class Pilot {
+public class Pilot extends VrpSolver {
 
-    public ArrayList<Node> solution;
 
 
 
