@@ -1,5 +1,8 @@
 package tp.vrp;
 
+import tp.vrp.Data.Node;
+import tp.vrp.Data.Request;
+
 import java.util.ArrayList;
 
 public class Solution {

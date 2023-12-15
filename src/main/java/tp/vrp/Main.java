@@ -1,12 +1,17 @@
 package tp.vrp;
 
+import tp.vrp.Data.Node;
+import tp.vrp.Data.Request;
+import tp.vrp.Data.Vehicule;
+import tp.vrp.parser.XMLParser;
+
 import java.util.List;
 
 public class Main {
         public static void main(String[] args) {
 
                         XMLParser parser = new XMLParser();
-                        parser.parseXMLFile("JDD03.xml"); // Remplacez par le chemin de votre fichier XML
+                        parser.parseXMLFile("JDD03.xml");
 
                         List<Node> nodes = parser.getNodeList();
                         List<Request> requests = parser.getRequestList();
@@ -23,7 +28,7 @@ public class Main {
                                 Request request = requests.get(i);
                                 System.out.println("Request ID: " + request.getId() + ", Quantité: " + request.getQuantity() + ", Node ID: " + request.getNode());
                         }
-                        System.out.println("\nLes 5 premièrs vehicules :");
+                        System.out.println("\nLe vehicule :");
                         for (int i = 0; i < Math.min(5, vehicules.size()); i++) {
                             Vehicule vehicule = vehicules.get(i);
                             System.out.println("Vehicule Profile: " + vehicule.getVehicleProfile() +

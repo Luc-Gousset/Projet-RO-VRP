@@ -1,6 +1,10 @@
-package tp.vrp;
+package tp.vrp.parser;
 
 
+
+import tp.vrp.Data.Node;
+import tp.vrp.Data.Request;
+import tp.vrp.Data.Vehicule;
 
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
