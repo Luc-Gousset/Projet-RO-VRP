@@ -3,6 +3,7 @@ package tp.vrp;
 import tp.vrp.Data.Node;
 import tp.vrp.Data.Request;
 import tp.vrp.Data.Vehicule;
+import tp.vrp.heuristiques.SecondPlusProche;
 import tp.vrp.parser.XMLParser;
 
 import java.util.List;
@@ -35,6 +36,21 @@ public class Main {
                                     ", Departure Node: " + vehicule.getDepartureNode() +
                                     ", Arrival Node: " + vehicule.getArrivalNode() +
                                     ", Initial Capacity: " + vehicule.getCapacityInitial());
+
+                        }
+                        SecondPlusProche solver = new SecondPlusProche(nodes);
+                        boolean result = solver.compute();
+                        System.out.println(result);
+                        if (result) {
+                            System.out.println(result);
+                            List<Node> orderedNodes = solver.getSolution().solution;
+                            for (int i = 0; i < Math.min(10, orderedNodes.size()); i++) {
+                                Node node = orderedNodes.get(i);
+                                System.out.println("Node ID: " + node.getId() + ", Longitude: " + node.getLongitude() + ", Latitude: " + node.getLatitude());
+                            }
+                        } else {
+                            System.out.println("La séquence n'a pas pu être calculée.");
+
 
                         }
 

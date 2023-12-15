@@ -1,6 +1,7 @@
-package tp.vrp;
+package tp.vrp.heuristiques;
 
 import tp.vrp.Data.Node;
+import tp.vrp.SequenceSolver;
 
 import java.util.List;
 import java.util.Random;
