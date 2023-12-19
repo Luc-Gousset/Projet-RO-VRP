@@ -1,4 +1,4 @@
-package tp.vrp;
+package tp.vrp.main;
 
 import tp.vrp.Data.Node;
 import tp.vrp.Data.Request;
@@ -16,6 +16,7 @@ public class Main {
                         parser.parseXMLFile("JDD03.xml");
 
                         List<Node> nodes = parser.getNodeList();
+                        List<Node>nodes2 = nodes;
                         List<Request> requests = parser.getRequestList();
                         List<Vehicule> vehicules = parser.getVehicleList();
 
@@ -41,31 +42,23 @@ public class Main {
                         }
                         SecondPlusProche solver = new SecondPlusProche(nodes);
                         boolean result = solver.compute();
-                        System.out.println(result);
                         if (result) {
                             System.out.println(result);
                             List<Node> orderedNodes = solver.getSolution().solution;
-                            for (int i = 0; i < Math.min(10, orderedNodes.size()); i++) {
+                            for (int i = 0; i < Math.min(5, orderedNodes.size()); i++) {
                                 Node node = orderedNodes.get(i);
                                 System.out.println("Node ID: " + node.getId() + ", Longitude: " + node.getLongitude() + ", Latitude: " + node.getLatitude());
                             }
                         } else {
                             System.out.println("La séquence n'a pas pu être calculée.");
-
-
                         }
-                        Pilot solver2 = new Pilot(nodes);
+                        System.out.println("Test de l'heuristique pilot");
+                        Pilot solver2 = new Pilot(nodes2);
                         boolean result2 = solver2.compute();
                         System.out.println(result2);
                         if (result2) {
                             System.out.println(result2);
 
-                            List<Node> orderedNodes2 = solver2.getSolution().solution;
-                            System.out.println(orderedNodes2.size());
-                            for (int i = 0; i < Math.min(10, orderedNodes2.size()); i++) {
-                                Node node = orderedNodes2.get(i);
-                                System.out.println("Node ID: " + node.getId() + ", Longitude: " + node.getLongitude() + ", Latitude: " + node.getLatitude());
-                            }
                         } else {
                             System.out.println("La séquence n'a pas pu être calculée.");
 

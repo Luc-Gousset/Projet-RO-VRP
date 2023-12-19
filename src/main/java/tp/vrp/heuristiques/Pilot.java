@@ -44,8 +44,13 @@ public class Pilot extends SequenceSolver {
         }
 
         // Afficher la solution
-        System.out.println("Séquence optimale: " + solution);
-
+        //System.out.println("Séquence optimale: " + solution);
+        //espece de grand malase on va pas tout print sur la meme ligne ???
+        for (int i = 0; i < Math.min(5, solution.size()); i++) {
+            Node node = solution.get(i);
+            System.out.println("Node ID: " + node.getId() + ", Longitude: " + node.getLongitude() + ", Latitude: " + node.getLatitude());
+        }
+        //voila un print intelligent de rien
         return true;
     }
 
