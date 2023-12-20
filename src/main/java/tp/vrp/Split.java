@@ -85,7 +85,7 @@ public class Split {
         }
 
         //Ford algo:
-        List<Integer> shortestPath = computeShortestPathSegment(101, 99, edges, nbVertice + 2);
+        List<Integer> shortestPath = computeShortestPathSegment(sequence.solution.getFirst().id, sequence.solution.getLast().id, edges, nbVertice + 2);
 
         int currentNodeStopId = 1;
         Solution sol = new Solution();
@@ -95,6 +95,7 @@ public class Split {
         {
             if(sequence.solution.get(i).id == shortestPath.get(currentNodeStopId))
             {
+                System.out.println(shortestPath.get(currentNodeStopId));
                 sol.solution.add(sequence.solution.get(i));
                 sol.solution.add(depot);
                 sol.requestArrayList = (ArrayList<Request>) requests;
