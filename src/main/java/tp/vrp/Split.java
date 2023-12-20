@@ -97,6 +97,7 @@ public class Split {
             {
                 sol.solution.add(sequence.solution.get(i));
                 sol.solution.add(depot);
+                sol.requestArrayList = (ArrayList<Request>) requests;
                 Routes.add(sol);
                 sol = new Solution();
                 sol.solution.add(depot);
