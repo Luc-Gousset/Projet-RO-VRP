@@ -10,10 +10,11 @@ import java.util.List;
 
 public class Pilot extends SequenceSolver {
     List<Node> nodesCompute;
-    int numberOfEvaluations ;
-    public Pilot(List<Node> nodes,int numberOfEvaluations) {
+    int numberOfEvaluations;
+
+    public Pilot(List<Node> nodes, int numberOfEvaluations) {
         super(nodes, null);
-        this.numberOfEvaluations = numberOfEvaluations ;
+        this.numberOfEvaluations = numberOfEvaluations;
         this.nodesCompute = new LinkedList<>(nodes);
     }
 
@@ -27,8 +28,19 @@ public class Pilot extends SequenceSolver {
     public Boolean compute() {
         if (nodesCompute.isEmpty()) return false;
 
-        Node current = nodesCompute.remove(0);
-        solution.solution.add(current);
+        // Trouver et démarrer avec le nœud ayant l'ID 101
+        Node startNode = nodesCompute.stream().filter(node -> node.getId() == 101).findFirst().orElse(null);
+        Node nodeavirer = nodesCompute.get(0);
+
+        if (startNode == null) {
+            System.out.println("Le nœud de départ avec ID 101 est introuvable.");
+            return false;
+        }
+        nodesCompute.remove(nodeavirer);
+        nodesCompute.remove(startNode);
+        solution.solution.add(startNode);
+
+        Node current = startNode;
 
         while (!nodesCompute.isEmpty()) {
             List<Node> twoClosestNodes = findSecondClosestNode(current, nodesCompute);
@@ -42,13 +54,8 @@ public class Pilot extends SequenceSolver {
             current = bestNode;
         }
 
-        // Afficher la solution
-        //System.out.println("Séquence optimale: " + solution);
-        //espece de grand malase on va pas tout print sur la meme ligne ???
-        //voila un print intelligent de rien
         return true;
     }
-
 
     private Node findClosestNode(Node current, List<Node> nodes) {
         Node closest = null;

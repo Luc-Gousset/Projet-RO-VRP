@@ -26,11 +26,11 @@ public class SecondPlusProche extends SequenceSolver {
             if (nextNode == null) {
 
                 if(solution.solution.size() == (entryNodes.size()-2)) {
-                    System.out.println("liste bien gourmande");
+                    System.out.println("Liste bien gourmande");
                     return true;
                 }
                 else{
-                    System.out.println("probleme lors du compute");
+                    System.out.println("Probleme lors du compute");
                     return false;
                 }
             }
