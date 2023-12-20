@@ -17,6 +17,7 @@ public class Main {
 
         List<Node> nodes = parser.getNodeList();
         List<Node> nodes2 = nodes;
+
         List<Request> requests = parser.getRequestList();
         List<Vehicule> vehicules = parser.getVehicleList();
 
@@ -26,7 +27,7 @@ public class Main {
 
 
 
-        System.out.println("Les 5 premiers Nodes :");
+        System.out.println("Les 5 premiers Nodes :" + nodes.size());
         for (int i = 0; i < Math.min(5, nodes.size()); i++) {
             Node node = nodes.get(i);
             System.out.println("Node ID: " + node.getId() + ", Longitude: " + node.getLongitude() + ", Latitude: " + node.getLatitude());
@@ -66,6 +67,11 @@ public class Main {
             System.out.println("La séquence n'a pas pu être calculée.");
         }
 
+        Pilot solver2 = new Pilot(nodes2);
+         solver2.compute();
+        System.out.println("Second + proche  : " + solver.getSolution().getTotalDistance()+" " + solver.getSolution().solution.size());
+
+         System.out.println("Pilot : " + solver2.getSolution().getTotalDistance() +" " + solver2.getSolution().solution.size());
         Split s = new Split(solver.getSolution(), requests, vehicules.get(0), distance);
         List<Solution> solutions = s.computeSplit();
 
