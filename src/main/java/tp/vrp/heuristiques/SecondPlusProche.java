@@ -8,8 +8,8 @@ import java.util.List;
 
 public class SecondPlusProche extends SequenceSolver {
 
-    public SecondPlusProche(List<Node> nodes) {
-        super(nodes);
+    public SecondPlusProche(List<Node> nodes, List<List<Double>> distanceMatrix) {
+        super(nodes, distanceMatrix);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class SecondPlusProche extends SequenceSolver {
 
         for (Node node : entryNodes) {
             if (!excludedNodes.contains(node)) {
-                double distance = Node.GetDistance(currentNode, node);
+                double distance = distanceMatrix.get(currentNode.id).get(node.id);
                 if (distance < minDistance) {
                     minDistance = distance;
                     closestNode = node;
@@ -59,7 +59,7 @@ public class SecondPlusProche extends SequenceSolver {
 
         for (Node node : entryNodes) {
             if (!excludedNodes.contains(node) && node != closestNode) {
-                double distance = Node.GetDistance(currentNode, node);
+                double distance = distanceMatrix.get(currentNode.id).get(node.id);
                 if (distance < minDistance) {
                     minDistance = distance;
                     secondClosestNode = node;

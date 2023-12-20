@@ -7,17 +7,18 @@ import tp.vrp.Data.Vehicule;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 class Edge {
     int source, destination;
     double weight;
+
     Edge(int s, int d, double w) {
         source = s;
         destination = d;
         weight = w;
     }
 }
-
 
 
 public class Split {
@@ -28,17 +29,22 @@ public class Split {
 
     private Vehicule vehicule;
 
-    public Split(Sequence sequence, List<Request> requests, Vehicule vehicule)
-    {
+    private List<List<Double>> distanceMatrix;
+
+    public Split(Sequence sequence, List<Request> requests, Vehicule vehicule, List<List<Double>> distanceMatrix) {
         this.sequence = sequence;
         this.requests = requests;
         this.vehicule = vehicule;
+        this.distanceMatrix = distanceMatrix;
     }
 
-    public List<Solution> computeSplit()
-    {
+    public List<Solution> computeSplit() {
+        for (int i = 0; i < sequence.solution.size(); i++) {
+            Node node = sequence.solution.get(i);
+            System.out.println("Node ID: " + node.getId() + ", Longitude: " + node.getLongitude() + ", Latitude: " + node.getLatitude() + " TYPE " + node.type);
+        }
 
-        Node depot = sequence.solution.stream().filter(request -> request.type == 0).findFirst().get();
+        Node depot = sequence.solution.stream().filter(request -> request.id == 101).findFirst().get();
 
         List<Solution> Routes = new ArrayList<>();
 
@@ -50,51 +56,69 @@ public class Split {
 
         List<Edge> edges = new ArrayList<>();
 
-        for(int i = 0; i<sequence.solution.size(); i++)
-        {
+        for (int i = 0; i < sequence.solution.size(); i++) {
             double current_load = 0;
             double current_distance = 0;
 
-            for(int y = i+1; y < sequence.solution.size(); y++)
-            {
-                current_distance += Node.GetDistance(sequence.solution.get(y-1), sequence.solution.get(y));
-                int finalY = y;
-                Request current_request = null;
-                if (requests.stream().anyMatch(request -> request.getNode() == finalY))
-                {
-                    current_request = requests.stream().filter(request -> request.getNode() == finalY).findFirst().get();
-                    if (current_request.getQuantity()+current_load<=max_load)
-                    {
-                        current_load += current_request.getQuantity();
-                        edges.add(new Edge(i, y, current_distance += Node.GetDistance(sequence.solution.get(y), depot)));
+            for (int y = i + 1; y < sequence.solution.size(); y++) {
+                Node previous_node = sequence.solution.get(y - 1);
+                Node current_node = sequence.solution.get(y);
+                current_distance += distanceMatrix.get(previous_node.id).get(current_node.id);
 
-                        System.out.println("AJOUT ARRETE " + i + " " + y + " CURRENT LOAD " + current_load + "current_distance "+current_distance);
-                    }else
+
+                Request current_request = null;
+                if (requests.stream().anyMatch(request -> request.getNode() == current_node.id)) {
+                    current_request = requests.stream().filter(request -> request.getNode() == current_node.id).findFirst().get();
+                    if (current_request.getQuantity() + current_load <= max_load) {
+                        current_load += current_request.getQuantity();
+
+                        edges.add(new Edge(sequence.solution.get(i).id, current_node.id, current_distance += distanceMatrix.get(current_node.id).get(depot.id)));
+
+                    } else
                         break;
-                }else
+                } else
                     break;
 
             }
 
 
-
-
         }
 
         //Ford algo:
-        int[] path = computeShortestPaths(depot.id, edges, nbVertice);
-        System.out.println("FORD ");
+        List<Integer> shortestPath = computeShortestPathSegment(101, 99, edges, nbVertice + 2);
 
-        for(int j = 0; j<nbVertice; j++)
+        int currentNodeStopId = 1;
+        Solution sol = new Solution();
+        sol.solution.add(depot);
+        System.out.println("Shrotest path lenght " + shortestPath.size());
+        for(int i = 1; i< sequence.solution.size(); i++)
         {
-            System.out.println(j+" "+path[j]);
+            if(sequence.solution.get(i).id == shortestPath.get(currentNodeStopId))
+            {
+                sol.solution.add(sequence.solution.get(i));
+                sol.solution.add(depot);
+                Routes.add(sol);
+                sol = new Solution();
+                sol.solution.add(depot);
+                if (currentNodeStopId < shortestPath.size()-1)
+                    currentNodeStopId++;
+            }else
+            {
+                sol.solution.add(sequence.solution.get(i));
+            }
         }
+
+
+
+
+
+
 
         return Routes;
 
 
-
     }
+
     private int[] computeShortestPaths(int source, List<Edge> edges, int numVertices) {
         double[] distances = new double[numVertices];
         int[] path = new int[numVertices];
@@ -111,16 +135,41 @@ public class Split {
             }
         }
 
-        // Check for negative-weight cycles
-        for (Edge edge : edges) {
-            if (distances[edge.source] + edge.weight < distances[edge.destination]) {
-                System.out.println("Graph contains a negative-weight cycle");
-                return null;
+
+        return path;
+    }
+
+    private List<Integer> computeShortestPathSegment(int start, int end, List<Edge> edges, int numVertices) {
+        double[] distances = new double[numVertices];
+        int[] predecessors = new int[numVertices];
+        Arrays.fill(distances, Double.MAX_VALUE);
+        distances[start] = 0;
+        Arrays.fill(predecessors, -1);
+
+        // Relax edges repeatedly
+        for (int i = 0; i < numVertices - 1; i++) {
+            for (Edge edge : edges) {
+                if (distances[edge.source] + edge.weight < distances[edge.destination]) {
+                    distances[edge.destination] = distances[edge.source] + edge.weight;
+                    predecessors[edge.destination] = edge.source;
+                }
             }
+        }
+
+        // Reconstruct path from start to end
+        List<Integer> path = new ArrayList<>();
+        int current = end;
+        while (current != -1 && current != start) {
+            path.add(0, current); // Add Node corresponding to index 'current'
+            current = predecessors[current];
+        }
+        if (current != -1) {
+            path.add(0, start);
         }
 
         return path;
     }
+
 }
 
 

@@ -15,10 +15,12 @@ public abstract class SequenceSolver {
         return solution;
     }
 
+    protected List<List<Double>> distanceMatrix;
 
-    public SequenceSolver(List<Node> nodes)
+    public SequenceSolver(List<Node> nodes, List<List<Double>> distanceMatrix)
     {
         entryNodes = nodes;
+        this.distanceMatrix = distanceMatrix;
     }
 
     public abstract Boolean compute();

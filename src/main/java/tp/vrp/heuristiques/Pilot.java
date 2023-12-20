@@ -10,16 +10,15 @@ import java.util.List;
 
 public class Pilot extends SequenceSolver {
     List<Node> nodesCompute;
-    LinkedList<Node> solution = new LinkedList<>();
     int numberOfEvaluations ;
     public Pilot(List<Node> nodes,int numberOfEvaluations) {
-        super(nodes);
+        super(nodes, null);
         this.numberOfEvaluations = numberOfEvaluations ;
         this.nodesCompute = new LinkedList<>(nodes);
     }
 
     public Pilot(List<Node> nodes) {
-        super(nodes);
+        super(nodes, null);
         this.numberOfEvaluations = 2;
         this.nodesCompute = new LinkedList<>(nodes);
     }
@@ -29,7 +28,7 @@ public class Pilot extends SequenceSolver {
         if (nodesCompute.isEmpty()) return false;
 
         Node current = nodesCompute.remove(0);
-        solution.add(current);
+        solution.solution.add(current);
 
         while (!nodesCompute.isEmpty()) {
             List<Node> twoClosestNodes = findSecondClosestNode(current, nodesCompute);
@@ -38,7 +37,7 @@ public class Pilot extends SequenceSolver {
             workList.remove(twoClosestNodes.get(1));
 
             Node bestNode = findTheBestOne(twoClosestNodes, workList);
-            solution.add(bestNode);
+            solution.solution.add(bestNode);
             nodesCompute.remove(bestNode);
             current = bestNode;
         }
@@ -46,10 +45,6 @@ public class Pilot extends SequenceSolver {
         // Afficher la solution
         //System.out.println("Séquence optimale: " + solution);
         //espece de grand malase on va pas tout print sur la meme ligne ???
-        for (int i = 0; i < Math.min(5, solution.size()); i++) {
-            Node node = solution.get(i);
-            System.out.println("Node ID: " + node.getId() + ", Longitude: " + node.getLongitude() + ", Latitude: " + node.getLatitude());
-        }
         //voila un print intelligent de rien
         return true;
     }
